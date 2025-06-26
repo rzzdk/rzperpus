@@ -171,66 +171,6 @@
         </div>
 
         <section id="katalogBuku">
-            <article class="buku-card">
-                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1589336932l/534575._SY475_.jpg" alt="Cover Laskar Pelangi">
-                <div class="buku-info">
-                    <h3>Laskar Pelangi</h3>
-                    <p class="penulis">Andrea Hirata</p>
-                    <p><strong>Tahun Terbit:</strong> 2005</p>
-                    <p><strong>ISBN:</strong> 979-3062-79-7</p>
-                    <p class="deskripsi-singkat">Kisah inspiratif tentang sepuluh anak dari keluarga miskin yang bersekolah di sebuah sekolah Muhammadiyah di Belitung.</p>
-                    <span class="kategori">Novel, Fiksi Indonesia</span>
-                </div>
-            </article>
-
-            <article class="buku-card">
-                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1572928514l/17234._SY475_.jpg" alt="Cover Bumi Manusia">
-                <div class="buku-info">
-                    <h3>Bumi Manusia</h3>
-                    <p class="penulis">Pramoedya Ananta Toer</p>
-                    <p><strong>Tahun Terbit:</strong> 1980</p>
-                    <p><strong>ISBN:</strong> 978-979-97312-3-4</p>
-                    <p class="deskripsi-singkat">Bagian pertama dari Tetralogi Buru yang menceritakan perjalanan Minke di era kolonial Hindia Belanda.</p>
-                    <span class="kategori">Novel, Sejarah</span>
-                </div>
-            </article>
-
-            <article class="buku-card">
-                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1420585954l/23692271.jpg" alt="Cover Sapiens">
-                <div class="buku-info">
-                    <h3>Sapiens: Riwayat Singkat Umat Manusia</h3>
-                    <p class="penulis">Yuval Noah Harari</p>
-                    <p><strong>Tahun Terbit:</strong> 2011 (Original)</p>
-                    <p><strong>ISBN:</strong> 978-602-424-416-3</p>
-                    <p class="deskripsi-singkat">Menjelajahi sejarah umat manusia dari zaman batu hingga era modern dengan sudut pandang yang unik.</p>
-                    <span class="kategori">Non-Fiksi, Sains Populer</span>
-                </div>
-            </article>
-
-            <article class="buku-card">
-                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1655988385l/40121378.jpg" alt="Cover Atomic Habits">
-                <div class="buku-info">
-                    <h3>Atomic Habits</h3>
-                    <p class="penulis">James Clear</p>
-                    <p><strong>Tahun Terbit:</strong> 2018</p>
-                    <p><strong>ISBN:</strong> 978-602-06-3317-6</p>
-                    <p class="deskripsi-singkat">Kerangka kerja praktis untuk meningkatkan diri setiap hari dengan membangun kebiasaan-kebiasaan kecil.</p>
-                    <span class="kategori">Pengembangan Diri</span>
-                </div>
-            </article>
-            
-            <article class="buku-card">
-                <img src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1330352536l/13524629.jpg" alt="Cover Gadis Kretek">
-                <div class="buku-info">
-                    <h3>Gadis Kretek</h3>
-                    <p class="penulis">Ratih Kumala</p>
-                    <p><strong>Tahun Terbit:</strong> 2012</p>
-                    <p><strong>ISBN:</strong> 978-979-22-8141-5</p>
-                    <p class="deskripsi-singkat">Pencarian seorang perempuan misterius bernama Jeng Yah di industri kretek Jawa Tengah pada masa lampau.</p>
-                    <span class="kategori">Novel, Fiksi Sejarah</span>
-                </div>
-            </article>
-            
             </section>
     </main>
 
@@ -238,28 +178,8 @@
         <p>&copy; 2025 Perpustakaan Digital Sederhana. Dibuat dengan cinta untuk para pembaca.</p>
     </footer>
 
-    <script>
-        // --- JavaScript untuk Fungsi Pencarian ---
-        document.addEventListener('DOMContentLoaded', function () {
-            const searchInput = document.getElementById('searchInput');
-            const bukuCards = document.querySelectorAll('.buku-card');
-
-            searchInput.addEventListener('keyup', function (event) {
-                const query = event.target.value.toLowerCase();
-
-                bukuCards.forEach(card => {
-                    // Mengambil semua teks di dalam kartu buku untuk pencarian
-                    const cardText = card.textContent.toLowerCase();
-
-                    if (cardText.includes(query)) {
-                        card.style.display = 'flex'; // Tampilkan kartu jika cocok
-                    } else {
-                        card.style.display = 'none'; // Sembunyikan jika tidak
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
 
 </body>
 </html>
