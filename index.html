@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perpustakaan Digital Sederhana</title>
+    <title>LIQOMA - Literasi Masjid Al-Qomar</title>
     <style>
         /* --- General Styling & Reset --- */
         body {
@@ -12,6 +12,23 @@
             color: #333;
             margin: 0;
             line-height: 1.6;
+            
+            background-image: url('latarbelakang.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(244, 247, 246, 0.85); /* Sedikit lebih tebal untuk keterbacaan */
+            z-index: -1;
         }
 
         .container {
@@ -22,22 +39,24 @@
 
         /* --- Header --- */
         .header {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 2rem 1rem;
+            background-color: #4caf50;
+            color: #ffffff;
+            padding: 3rem 1rem 6rem; /* Padding bawah lebih besar untuk ruang lengkungan */
             text-align: center;
-            border-bottom: 5px solid #3498db;
+            /* Penyesuaian: Efek lengkung simetris */
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 80% 90%, 50% 100%, 20% 90%, 0 100%);
         }
 
         .header h1 {
             margin: 0;
             font-size: 2.5rem;
+            font-weight: 600;
         }
 
         .header p {
             margin: 5px 0 0;
             font-size: 1.1rem;
-            color: #bdc3c7;
+            opacity: 0.9;
         }
 
         /* --- Search Bar --- */
@@ -54,18 +73,18 @@
             border: 2px solid #ddd;
             border-radius: 25px;
             transition: border-color 0.3s, box-shadow 0.3s;
+            background-color: #fff;
         }
 
         #searchInput:focus {
             outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+            border-color: #4caf50;
+            box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
         }
 
         /* --- Book Catalog --- */
         #katalogBuku {
             display: grid;
-            /* Membuat grid yang responsif */
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 25px;
         }
@@ -88,12 +107,12 @@
         .buku-card img {
             width: 100%;
             height: 250px;
-            object-fit: cover; /* Gambar akan menutupi area tanpa distorsi */
+            object-fit: cover;
         }
 
         .buku-info {
             padding: 20px;
-            flex-grow: 1; /* Memastikan konten info mengisi ruang yang tersisa */
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
@@ -101,7 +120,7 @@
         .buku-info h3 {
             margin: 0 0 10px;
             font-size: 1.4rem;
-            color: #2c3e50;
+            color: #333;
         }
 
         .buku-info .penulis {
@@ -116,9 +135,9 @@
         }
         
         .buku-info .kategori {
-            align-self: flex-start; /* Posisikan di awal */
-            margin-top: auto; /* Mendorong ke bawah */
-            background-color: #3498db;
+            align-self: flex-start;
+            margin-top: auto;
+            background-color: #4caf50;
             color: white;
             padding: 5px 10px;
             border-radius: 15px;
@@ -129,40 +148,46 @@
         /* --- Footer --- */
         .footer {
             text-align: center;
-            padding: 20px;
+            padding: 6rem 1rem 3rem; /* Padding atas lebih besar untuk ruang lengkungan */
             margin-top: 40px;
-            background-color: #2c3e50;
-            color: #ecf0f1;
+            background-color: #4caf50;
+            color: #ffffff;
             font-size: 0.9rem;
+            /* Penyesuaian: Efek lengkung simetris */
+            clip-path: polygon(0 0, 20% 10%, 50% 0, 80% 10%, 100% 0, 100% 100%, 0 100%);
         }
 
-        /* --- Media Queries untuk Responsif --- */
+        /* --- Media Queries --- */
         @media (max-width: 768px) {
+            .header, .footer {
+                clip-path: none; /* Menghilangkan efek lengkung di layar kecil */
+                padding: 3rem 1rem;
+            }
             .header h1 {
                 font-size: 2rem;
             }
             #katalogBuku {
-                grid-template-columns: 1fr 1fr; /* 2 kolom di tablet */
+                grid-template-columns: 1fr 1fr;
             }
         }
         @media (max-width: 480px) {
             #katalogBuku {
-                grid-template-columns: 1fr; /* 1 kolom di ponsel */
+                grid-template-columns: 1fr;
             }
             .container {
                 padding: 10px;
             }
-            .header {
-                padding: 1.5rem 1rem;
+            .header, .footer {
+                padding: 2.5rem 1rem;
             }
         }
     </style>
 </head>
 <body>
-
+    
     <header class="header">
-        <h1>Perpustakaan Digital Sederhana</h1>
-        <p>Katalog Online Koleksi Buku Kami</p>
+        <h1>LIQOMA</h1>
+        <p>Katalog Buku Literasi Masjid Al-Qomar</p>
     </header>
 
     <main class="container">
@@ -175,7 +200,7 @@
     </main>
 
     <footer class="footer">
-        <p>&copy; 2025 Perpustakaan Digital Sederhana. Dibuat dengan cinta untuk para pembaca.</p>
+        <p>&copy; 2025 LIQOMA - Literasi Masjid Al-Qomar. Dibuat untuk jamaah dan masyarakat.</p>
     </footer>
 
     <script src="data.js"></script>
