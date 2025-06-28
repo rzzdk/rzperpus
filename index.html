@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIQOMA - Literasi Masjid Al-Qomar</title>
+    <style>
+        /* --- General Styling & Reset --- */
+        :root {
+            --primary-color: #28a745; /* Warna hijau utama yang lebih segar */
+            --primary-dark: #218838;
+            --light-gray: #f8f9fa;
+            --gray-border: #dee2e6;
+            --text-dark: #343a40;
+            --text-light: #6c757d;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--light-gray);
+            color: var(--text-dark);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* --- Header --- */
+        .header {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 0 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 80px;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-logo {
+            height: 50px;
+            width: 50px;
+            margin-right: 15px;
+            border-radius: 8px;
+        }
+
+        .header-text h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        /* --- Navigasi Tab di Header --- */
+        .tab-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .tab-link {
+            padding: 8px 16px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+            transition: color 0.3s, background-color 0.3s;
+            border-radius: 6px;
+            position: relative;
+        }
+
+        .tab-link:hover {
+            color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-link.active {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .tab-link.active::after {
+            content: '';
+            position: absolute;
+            width: 70%;
+            height: 3px;
+            background-color: #ffffff;
+            bottom: -29px;
+            left: 15%;
+            border-radius: 2px;
+        }
+
+        .hamburger-menu { display: none; }
+
+        /* --- Konten Tab --- */
+        .tab-content {
+            display: none;
+            padding-top: 30px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* --- Kontrol Katalog (Pencarian & Filter) --- */
+        .catalog-controls {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .search-container input, .filter-container select {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 1rem;
+            border: 1px solid var(--gray-border);
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        .search-container input:focus, .filter-container select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+        }
+
+        .filter-container label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        /* --- Panel Rekap --- */
+        .summary-panels {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .panel {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 5px solid var(--primary-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .panel h3 {
+            margin: 0 0 5px 0;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .panel p {
+            margin: 0;
+            color: var(--text-light);
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        /* --- Tabel Data Buku --- */
+        .table-container {
+            overflow-x: auto; /* Memastikan tabel bisa di-scroll di layar kecil */
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            padding: 10px;
+        }
+
+        #tabelBuku {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        #tabelBuku th, #tabelBuku td {
+            padding: 15px;
+            border-bottom: 1px solid var(--gray-border);
+            vertical-align: middle;
+        }
+
+        #tabelBuku thead tr {
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        #tabelBuku tbody tr:nth-child(even) {
+            background-color: var(--light-gray);
+        }
+
+        #tabelBuku tbody tr:hover {
+            background-color: #e9ecef;
+        }
+
+        #tabelBuku td:first-child {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .lokasi-badge {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-block;
+            text-align: center;
+        }
+
+        #pesanTidakDitemukan {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+
+        /* --- Info Sections (Tentang, Hubungi) --- */
+        .info-section {
+            background-color: #ffffff;
+            padding: 40px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ... (Gaya lain untuk 'Tentang' dan 'Hubungi' tetap sama) ... */
+        .about-header-images{display:flex;gap:15px;justify-content:center;margin-bottom:30px}.about-header-images img{width:45%;max-width:300px;border-radius:8px;box-shadow:0 4px 6px rgba(0,0,0,.1);object-fit:cover}.about-title{text-align:center;font-size:2rem;color:#333;font-weight:600;margin-bottom:30px;position:relative}.about-title::after{content:'';position:absolute;width:80px;height:4px;background-color:var(--primary-color);bottom:-10px;left:50%;transform:translateX(-50%)}.about-section{text-align:left;max-width:800px;margin:40px auto}.about-section h3{font-size:1.5rem;color:var(--primary-color);margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid #eee}.about-section p{text-align:justify;font-size:1rem;line-height:1.7;margin-bottom:15px}.feature-list{list-style:none;padding-left:0;margin:20px 0}.feature-list li{display:flex;align-items:center;font-size:1rem;margin-bottom:10px}.feature-list svg{width:20px;height:20px;fill:var(--primary-color);margin-right:15px;flex-shrink:0}.contact-info{text-align:center}.contact-info p{font-size:1.1rem;color:#555;max-width:800px;margin-left:auto;margin-right:auto}.contact-info a{color:var(--primary-color);text-decoration:none;font-weight:500}.contact-info a:hover{text-decoration:underline}.social-links{margin-top:20px}.social-links a{display:inline-block;margin:0 15px;text-decoration:none}.social-links svg{width:30px;height:30px;fill:var(--primary-color);transition:transform .3s,fill .3s}.social-links a:hover svg{transform:scale(1.2);fill:var(--primary-dark)}
+
+        /* --- Footer --- */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 40px;
+            background-color: #333;
+            color: #ffffff;
+            font-size: 0.9rem;
+        }
+
+        /* --- Media Queries (Responsif) --- */
+        @media (max-width: 768px) {
+            .header { padding: 0 1rem; }
+            .header-text p { display: none; }
+            .header-text h1 { font-size: 1.3rem; }
+            .hamburger-menu {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                width: 28px;
+                height: 28px;
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                padding: 0;
+                z-index: 10;
+            }
+            .hamburger-menu span {
+                width: 28px;
+                height: 3px;
+                background-color: #fff;
+                border-radius: 2px;
+                transition: all 0.3s linear;
+            }
+            .tab-nav {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--primary-color);
+                box-shadow: 0 4px 5px rgba(0,0,0,0.2);
+            }
+            .tab-nav.open { display: flex; }
+            .tab-link { text-align: center; padding: 15px; width: 100%; border-radius: 0; }
+            .tab-link.active::after { display: none; }
+            .tab-link.active { background-color: rgba(0,0,0,0.1); }
+
+            .catalog-controls { grid-template-columns: 1fr; }
+            .summary-panels { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 15px; }
+            .panel h3 { font-size: 2rem; }
+            .about-header-images { flex-direction: column; align-items: center; }
+            .about-header-images img { width: 90%; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-content">
+        <div class="header-brand">
+            <img src="logo.jpeg" alt="Logo LIQOMA" class="header-logo" onerror="this.onerror=null;this.src='https://placehold.co/100x100/FFFFFF/28a745?text=LOGO';">
+            <div class="header-text">
+                <h1>LIQOMA</h1>
+            </div>
+        </div>
+        <nav class="tab-nav" id="main-nav">
+            <button class="tab-link active" data-tab="katalog">Katalog</button>
+            <button class="tab-link" data-tab="tentang">Tentang</button>
+            <button class="tab-link" data-tab="hubungi">Hubungi</button>
+        </nav>
+        <button class="hamburger-menu" id="hamburger-menu" aria-label="Buka menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</header>
+
+<div class="container">
+    <main>
+        <!-- Tab Katalog Buku -->
+        <div id="katalog" class="tab-content active">
+
+            <!-- Kontrol Pencarian dan Filter -->
+            <div class="catalog-controls">
+                <div class="search-container">
+                    <label for="searchInput"><b>Cari Buku</b></label>
+                    <input type="text" id="searchInput" placeholder="Ketik judul, pengarang, atau kode buku...">
+                </div>
+                <div class="filter-container">
+                    <label for="kategoriFilter">Filter Berdasarkan Kategori</label>
+                    <select id="kategoriFilter">
+                        <option value="semua">Semua Kategori</option>
+                        <!-- Opsi kategori akan diisi oleh JavaScript -->
+                    </select>
+                </div>
+            </div>
+
+            <!-- Panel Rekap Jumlah Buku -->
+            <div class="summary-panels">
+                <div class="panel">
+                    <h3 id="totalBuku">0</h3>
+                    <p>Total Buku</p>
+                </div>
+                <div class="panel">
+                    <h3 id="bukuDitampilkan">0</h3>
+                    <p>Hasil Ditemukan</p>
+                </div>
+            </div>
+
+            <!-- Tabel Data Buku -->
+            <div class="table-container">
+                <table id="tabelBuku">
+                    <thead>
+                    <tr>
+                        <th>Kode Buku</th>
+                        <th>Judul</th>
+                        <th>Pengarang</th>
+                        <th>Penerbit</th>
+                        <th>Tahun</th>
+                        <th>Lokasi</th>
+                    </tr>
+                    </thead>
+                    <tbody id="katalogBukuBody">
+                    <!-- Data buku akan dimasukkan di sini oleh JavaScript -->
+                    </tbody>
+                </table>
+                <p id="pesanTidakDitemukan">Buku tidak ditemukan. Coba kata kunci atau filter yang lain.</p>
+            </div>
+
+        </div>
+
+        <!-- Tab Tentang -->
+        <div id="tentang" class="tab-content">
+            <section class="info-section">
+                <div class="about-header-images">
+                    <img src="https://placehold.co/600x400/28a745/ffffff?text=Masjid+Al-Qomar" alt="Papan Nama Masjid Al-Qomar" onerror="this.onerror=null;this.src='https://placehold.co/600x400/28a745/ffffff?text=Gambar';">
+                    <img src="https://placehold.co/600x400/cccccc/333333?text=Rak+Buku" alt="Rak buku perpustakaan masjid" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/333333?text=Gambar';">
+                </div>
+                <h2 class="about-title">Tentang Kami</h2>
+                <div class="about-section">
+                    <h3>Apa itu LIQOMA?</h3>
+                    <p>LIQOMA (Literasi Masjid Al-Qomar) dapat diartikan aplikasi chamber perpustakaan mini Masjid Al-Qomar, Cirowek, Yogyakarta. Aplikasi ini hadir untuk menjawab kebutuhan jamaah dan masyarakat umum dalam mengakses koleksi buku-buku yang dimiliki oleh perpustakaan masjid. Melalui LIQOMA, pengguna dapat:</p>
+                    <ul class="feature-list">
+                        <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Melihat seluruh koleksi buku yang tersedia.</span></li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Mencari buku berdasarkan judul, pengarang, atau kode.</span></li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg><span>Memfilter buku berdasarkan kategori yang spesifik.</span></li>
+                    </ul>
+                    <p>LIQOMA dirancang untuk mendukung visi Masjid Al-Qomar sebagai pusat ibadah, edukasi, pusat keilmuan, ilmu dan dakwah berbasis teknologi.</p>
+                </div>
+                <div class="about-section">
+                    <h3>Tentang Masjid Al-Qomar</h3>
+                    <p>Masjid Al-Qomar berdiri sejak tahun 1980 di Dusun Cirowek, Yogyakarta, atas wakaf keluarga Bp. Citro Wiyono. Nama "Al Qomar" yang berarti bulan, dipilih oleh semangat keinginan jamaah untuk selalu beter penerangan menuju ridho illahi dan syiar Islam di Pedusunan yang saat selalu didukung oleh PP Wahid Hasyim sebagai pembimbing jamaah pengajian ibu-ibu dan Pemuda dusun.</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Tab Hubungi Kami -->
+        <div id="hubungi" class="tab-content">
+            <section class="info-section">
+                <h2 class="about-title">Hubungi Kami</h2>
+                <div class="contact-info">
+                    <p><strong>Alamat:</strong> Masjid Al-Qomar, Jl. Literasi No. 1, Kota Harapan, Indonesia</p>
+                    <p><strong>Email:</strong> <a href="mailto:info.liqoma@masjid.id">info.liqoma@masjid.id</a></p>
+                    <p><strong>Telepon:</strong> (021) 123-4567</p>
+                    <div class="social-links">
+                        <a href="#" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919-4.919C8.416 2.175 8.796 2.163 12 2.163m0-2.163C8.74 0 8.333.01 7.053.062 2.695.272.273 2.69.063 7.053.01 8.333 0 8.74 0 12s.01 3.667.063 4.947c.21 4.363 2.63 6.785 7.004 6.995 1.27.052 1.667.063 4.933.063s3.663-.01 4.933-.063c4.373-.21 6.795-2.632 6.995-7.004.053-1.28.063-1.667.063-4.933s-.01-3.663-.063-4.933C23.728 2.69 21.31.272 16.947.063 15.667.01 15.26 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"/></svg></a>
+                        <a href="#" target="_blank" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22.675 0h-21.35C.59 0 0 .59 0 1.325v21.35C0 23.41.59 24 1.325 24H12.82v-9.29H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.735 0 1.325-.59 1.325-1.325V1.325C24 .59 23.41 0 22.675 0z"/></svg></a>
+                        <a href="#" target="_blank" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</div>
+
+<footer class="footer">
+    <p>&copy; 2025 LIQOMA - Literasi Masjid Al-Qomar. Dibuat untuk jamaah dan masyarakat.</p>
+</footer>
+
+<script src="data.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
